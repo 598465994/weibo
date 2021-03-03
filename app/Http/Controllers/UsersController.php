@@ -12,13 +12,19 @@ class UsersController extends Controller
         //Laravel 提供身份验证（Auth）中间件来过滤未登录用户的
         $this->middleware('auth', [
             //except 方法来设定 指定动作 不使用 Auth 中间件进行过滤。相反的还有 only 白名单方法，将只过滤指定动作
-            'except' => ['create', 'store']
+            'except' => ['create', 'store', 'index']
         ]);
 
         //只让未登录的用户访问create注册用户
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+    }
+
+    public function index()
+    {
+        $users = User::paginate(6);
+        return view('users.index', compact('users'));
     }
 
     public function create()
