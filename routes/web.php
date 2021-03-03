@@ -32,9 +32,9 @@ Route::resource('users', 'UsersController');
 //下面几行同等上面一行代码
 // //显示所有用户列表的页面
 // Route::get('/users', 'UsersController@index')->name('users.index');
-// //显示用户个人信息的页面
-// Route::get('/users/create', 'UsersController@create')->name('users.create');
 // //创建用户的页面
+// Route::get('/users/create', 'UsersController@create')->name('users.create');
+// //显示用户个人信息的页面
 // Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 // //创建用户
 // Route::post('/users', 'UsersController@store')->name('users.store');
@@ -45,7 +45,7 @@ Route::resource('users', 'UsersController');
 // //删除用户
 // Route::delate('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
-//显示登录页面
+// 显示登录页面
 Route::get('login', 'SessionsController@create')->name('login');
 // 创建新会话（登录）
 Route::post('login', 'SessionsController@store')->name('login');

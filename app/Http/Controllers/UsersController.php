@@ -7,6 +7,20 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        //Laravel 提供身份验证（Auth）中间件来过滤未登录用户的
+        $this->middleware('auth', [
+            //except 方法来设定 指定动作 不使用 Auth 中间件进行过滤。相反的还有 only 白名单方法，将只过滤指定动作
+            'except' => ['create', 'store']
+        ]);
+
+        //只让未登录的用户访问create注册用户
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     public function create()
     {
         return view('users.create');
@@ -14,6 +28,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.show', compact('user'));
     }
 
@@ -41,11 +56,13 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:255',
             'password' => 'nullable|confirmed|min:6'
