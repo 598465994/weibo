@@ -12,6 +12,18 @@ use Carbon\Carbon;
 
 class PasswordController extends Controller
 {
+    public function __construct()
+    {
+        //中间件throttle，限流，1分钟只能访问2次
+        $this->middleware('throttle:2,1', [
+            'only' => ['showLinkRequestForm']
+        ]);
+
+        $this->middleware('throttle:3,10', [
+            'only' => ['sendResetLinkEmail']
+        ]);
+    }
+
     public function showLinkRequestForm()
     {
         return view('auth.passwords.email');
@@ -96,6 +108,7 @@ class PasswordController extends Controller
         // 5. 记录存在
         if ($record) {
             // 5.1. 检查是否过期
+            // 发送的时间添加有效时间600秒，是否属于过去
             if (Carbon::parse($record['created_at'])->addSeconds($expires)->isPast()) {
                 session()->flash('danger', '链接已过期，请重新尝试');
                 return redirect()->back();

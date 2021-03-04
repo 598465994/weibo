@@ -62,4 +62,4 @@ Route::post('password/email', 'PasswordController@sendResetLinkEmail')->name('pa
 //更新密码的页面
 Route::get('password/reset/{token}', 'PasswordController@showResetForm')->name('password.reset');
 //对提交过来的 token 和 email 数据进行配对，正确的话更新密码
-Route::post('password/reset', 'passwotdController@reset')->name('password.update');
+Route::post('password/reset', 'passwordController@reset')->name('password.update');
