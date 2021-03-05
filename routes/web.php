@@ -63,3 +63,11 @@ Route::post('password/email', 'PasswordController@sendResetLinkEmail')->name('pa
 Route::get('password/reset/{token}', 'PasswordController@showResetForm')->name('password.reset');
 //对提交过来的 token 和 email 数据进行配对，正确的话更新密码
 Route::post('password/reset', 'passwordController@reset')->name('password.update');
+
+//微博创建和删除路由，resource会生成完整的路由，使用only来指定只生成某几个动作
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
+// //同下路由
+// //处理创建微博的请求
+// Route::post('/statuses', 'StatusesController@store')->name('statuses.store');
+// //处理删除微博的请求
+// Route::delete('/statuses/{status}', 'StatusesController@destroy')->name('statuses.destroy');

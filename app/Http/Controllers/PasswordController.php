@@ -15,13 +15,13 @@ class PasswordController extends Controller
     public function __construct()
     {
         //中间件throttle，限流，1分钟只能访问2次
-        $this->middleware('throttle:2,1', [
-            'only' => ['showLinkRequestForm']
-        ]);
+        // $this->middleware('throttle:2,1', [
+        //     'only' => ['showLinkRequestForm']
+        // ]);
 
-        $this->middleware('throttle:3,10', [
-            'only' => ['sendResetLinkEmail']
-        ]);
+        // $this->middleware('throttle:3,10', [
+        //     'only' => ['sendResetLinkEmail']
+        // ]);
     }
 
     public function showLinkRequestForm()
