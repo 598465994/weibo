@@ -19,6 +19,7 @@ class UserPolicy
         //
     }
 
+    //只有当用户id是登录用户才执行
     public function update(User $currentUser, User $user)
     {
         return $currentUser->id === $user->id;

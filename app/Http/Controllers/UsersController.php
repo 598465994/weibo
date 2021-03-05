@@ -42,7 +42,10 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $this->authorize('update', $user);
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(30);
+        return view('users.show', compact('user', 'statuses'));
     }
 
     /**
@@ -118,7 +121,7 @@ class UsersController extends Controller
     }
 
     /**
-     * 右键验证
+     * 邮件验证
      */
     public function confirmEmail($token)
     {
